@@ -7,15 +7,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testBasicTest()
+    /** @test */
+    public function it_goes_to_a_simple_url()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->get('/fadeback')
+            ->assertSee('You are here.');
     }
 }
