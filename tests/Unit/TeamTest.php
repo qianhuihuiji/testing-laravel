@@ -45,6 +45,49 @@ class TeamTest extends TestCase
     }
 
     /** @test */
+    public function a_team_can_remove_members()
+    {
+        $team = factory('App\Team')->create();
+
+        $users = factory('App\User',2)->create();
+
+        $team->add($users);
+
+        $team->remove($users[0]);
+
+        $this->assertEquals(1,$team->count());
+    }
+
+    /** @test */
+    public function a_team_can_remove_more_than_one_members_at_once()
+    {
+        $team = factory('App\Team')->create(['size' => 3]);
+
+        $users = factory('App\User',3)->create();
+
+        $team->add($users);
+
+        $team->remove($users->slice(0,2));
+
+        $this->assertEquals(1,$team->count());
+    }
+
+    /** @test */
+    public function a_team_can_remove_all_members_at_once()
+    {
+        $team = factory('App\Team')->create();
+
+        $users = factory('App\User',2)->create();
+
+        $team->add($users);
+
+        $team->restart($users);
+
+        $this->assertEquals(0,$team->count());
+    }
+
+
+    /** @test */
     public function a_team_has_a_maximum_size()
     {
         $team = factory('App\Team')->create(['size' => 2]);
