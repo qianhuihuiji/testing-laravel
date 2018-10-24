@@ -106,4 +106,16 @@ class TeamTest extends TestCase
 
         $team->add($userThree);
     }
+
+    /** @test */
+    public function when_adding_many_members_at_once_you_still_may_not_exceed_the_team_maximun_size()
+    {
+        $team = factory('App\Team')->create(['size' => 2]);
+
+        $users = factory('App\User',3)->create();
+
+        $this->expectException('Exception');
+
+        $team->add($users);
+    }
 }
