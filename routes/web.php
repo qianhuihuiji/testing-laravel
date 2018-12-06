@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::get('fadeback', function () {
     return 'You are here.';
 });
+
+
+Route::post('/upload-new-users-csv','UploadCsvController@upload');
