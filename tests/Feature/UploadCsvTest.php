@@ -26,6 +26,26 @@ class UploadCsvTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function it_can_only_upload_csv_regardless_of_extension()
+    {
+        $response = $this->json('POST', 'upload-new-users-csv', [
+            'usersCsvFile' => $this->createImageUploadFile('testFile', 'csv')
+        ]);
+
+        $response->assertStatus(422);
+    }
+
+    protected function createImageUploadFile($fileName = 'testFile', $extension = 'jpeg')
+    {
+        $virtualFile = $this->createVirtualFile($fileName, $extension)
+                    ->getChild($fileName.'.'.$extension);
+
+        imagejpeg(imagecreate(500, 90), $virtualFile->url());
+
+        return $this->createUploadFile($virtualFile,$fileName);
+    }
+
     protected function createUploadFile(vfsStreamFile $file,$originalName)
     {
         return new UploadedFile(

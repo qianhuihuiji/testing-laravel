@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\UploadCsvUsers;
 
 class UploadCsvController extends Controller
 {
-    public function upload(Request $request)
+    public function upload(UploadCsvUsers $request)
     {
         $uploadedFile = $request->file('usersCsvFile')->openFile();
 
